@@ -1,5 +1,6 @@
 package com.pointflow.itime.mapper;
 
+import com.pointflow.itime.domain.Idots;
 import com.pointflow.itime.domain.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -30,5 +31,9 @@ public interface UserMapper {
 
     @Update("update user set password = to_base64(AES_ENCRYPT(#{password},'jkl;itime1234++==')) where id=#{id}")
     int updateUser(User user);
+
+    //按天统计注册用户
+    @Select("select date_format(register_time, '%Y-%m-%d') as label, count(id) as value from user group by label" )
+    List<Idots> registeredUsers();
 
 }

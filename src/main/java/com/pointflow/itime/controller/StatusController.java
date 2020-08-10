@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -97,7 +94,14 @@ public class StatusController {
     @RequestMapping(value = "/activeUsers")
     public String activeUsers(Model model){
         List<Idots> datas = statusService.activeUsers();
-        model.addAttribute("datas",datas);
+        ArrayList<String> date = new ArrayList<>();
+        ArrayList<Integer> nums = new ArrayList<>();
+        for(Idots item : datas){
+            date.add(item.getLabel());
+            nums.add(item.getValue());
+        }
+        model.addAttribute("dates", date);
+        model.addAttribute("nums",nums);
         return "activeUsers";
     }
 }

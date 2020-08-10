@@ -8,10 +8,7 @@ import com.pointflow.itime.service.PictureService;
 import com.pointflow.itime.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -39,7 +36,9 @@ public class FeedbackController {
     @Autowired
     private FeedbackService feedbackService;
 
-
+/*
+ * 上传问题反馈 文字加图片
+ */
     @ResponseBody
     @PostMapping(value = "/upload")
     public Map<String,Object> upload(HttpServletRequest request, @RequestParam String phoneNumber,
@@ -87,7 +86,22 @@ public class FeedbackController {
 
     }
 
-
+    @ResponseBody
+    @PostMapping(value = "/advice", headers = "Accept=application/json")
+    public Map<String,Object> addTip(@RequestBody Map<String,Object> requestMap){
+        Map<String,Object> map = new HashMap<>();
+        String phone = requestMap.get("phoneNumber").toString().trim();
+        User user = userService.findByPhoneNumber(phone);
+        Long timestamp = new Date().getTime();
+        String advice = requestMap.get("advice").toString();
+        Feedback fd = new Feedback();
+        fd.setUserId(user.getId());
+        fd.setDescription(advice);
+        fd.setPictureGroup(timestamp);
+        feedbackService.feedback(fd);
+        map.put("msg", "success");
+        return map;
+    }
 
 
 }

@@ -1,5 +1,6 @@
 package com.pointflow.itime.service;
 
+import com.pointflow.itime.domain.Idots;
 import com.pointflow.itime.domain.User;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface UserService {
     int addUser(User user);
 
     int updateUser(User user);
+
+    List<Idots> registeredUsers();
 }

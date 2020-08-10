@@ -23,4 +23,7 @@ public interface DatasService {
     //获取用户历史使用记录
     List<Idots> getData(Datas datas);
 
+
+    List<Idots> activeUsers();
+
 }

@@ -1,5 +1,6 @@
 package com.pointflow.itime.service.impl;
 
+import com.pointflow.itime.domain.Idots;
 import com.pointflow.itime.domain.User;
 import com.pointflow.itime.mapper.UserMapper;
 import com.pointflow.itime.service.UserService;
@@ -43,5 +44,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateUser(User user) {
         return userMapper.updateUser(user);
+    }
+
+    @Override
+    public List<Idots> registeredUsers() {
+        return userMapper.registeredUsers();
     }
 }

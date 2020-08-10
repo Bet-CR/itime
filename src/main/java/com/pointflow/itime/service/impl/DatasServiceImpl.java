@@ -46,5 +46,10 @@ public class DatasServiceImpl implements DatasService {
         return datasMapper.getData(datas);
     }
 
+    @Override
+    public List<Idots> activeUsers() {
+        return datasMapper.activeUsers();
+    }
+
 
 }

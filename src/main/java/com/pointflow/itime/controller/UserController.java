@@ -1,5 +1,6 @@
 package com.pointflow.itime.controller;
 
+import com.pointflow.itime.domain.Idots;
 import com.pointflow.itime.domain.User;
 import com.pointflow.itime.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,10 +72,8 @@ public class UserController {
             user.setPassword(password);
             user.setRegisterTime(new Date());
             userService.addUser(user);
-
         }
         map.put("msg", "success");
-
         return map;
     }
 
@@ -113,18 +112,10 @@ public class UserController {
         Map<String,Object> map = new HashMap<>();
         String phone = requestMap.get("phoneNumber").toString().trim();
         User user = userService.findByPhoneNumber(phone);
-        if(user == null){
-            map.put("msg", "unRegistered");
-        }else{
-            String password = requestMap.get("password")==null?user.getPassword():requestMap.get("password").toString();
-            user.setPassword(password);
-            int flag = userService.updateUser(user);
-            if(flag == 1){
-                map.put("msg", "success");
-            }else{
-                map.put("msg", "fail");
-            }
-        }
+        String password = requestMap.get("password")==null?user.getPassword():requestMap.get("password").toString();
+        user.setPassword(password);
+        userService.updateUser(user);
+        map.put("msg", "success");
         return map;
     }
 
@@ -140,9 +131,14 @@ public class UserController {
     }
     @RequestMapping("/registerStatistics")
     public String registerStatistics(Model model){
-       String[] dates = new String[]{"2020-07-01","2020-07-02","2020-07-03","2020-07-04","2020-07-05","2020-07-06","2020-07-07"};
-       int[] nums = new int[]{153, 213, 184, 240, 234, 242, 124};
-       model.addAttribute("dates", dates);
+       List<Idots> datas = userService.registeredUsers();
+       ArrayList<String> date = new ArrayList<>();
+       ArrayList<Integer> nums = new ArrayList<>();
+       for(Idots item : datas){
+           date.add(item.getLabel());
+           nums.add(item.getValue());
+       }
+       model.addAttribute("dates", date);
        model.addAttribute("nums",nums);
        return "Registration";
     }

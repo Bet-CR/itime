@@ -8,6 +8,7 @@ import com.pointflow.itime.service.DatasService;
 import com.pointflow.itime.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
@@ -152,7 +153,20 @@ public class DataController {
         return map;
     }
 
-
+    //活跃用户统计
+    @RequestMapping(value = "/activeUsers")
+    public String activeUsers(Model model){
+        List<Idots> datas = datasService.activeUsers();
+        ArrayList<String> date = new ArrayList<>();
+        ArrayList<Integer> nums = new ArrayList<>();
+        for(Idots item : datas){
+            date.add(item.getLabel());
+            nums.add(item.getValue());
+        }
+        model.addAttribute("dates", date);
+        model.addAttribute("nums",nums);
+        return "activeUsers";
+    }
 
 
 }

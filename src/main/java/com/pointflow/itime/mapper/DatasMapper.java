@@ -33,4 +33,10 @@ public interface DatasMapper {
 
 
 
+    //获取日活跃用户数
+    @Select("select FROM_UNIXTIME(saveTimestamp/1000, '%Y-%m-%d' ) as label, count(distinct user_id) as value from datas group by label")
+    List<Idots> activeUsers();
+
+
+
 }
