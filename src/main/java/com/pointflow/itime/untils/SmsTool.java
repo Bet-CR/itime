@@ -21,9 +21,9 @@ public class SmsTool {
     static final String product = "Dysmsapi";
     //产品域名
     static final String domain = "dysmsapi.aliyuncs.com";
-    // TODO 开发者AK
-    static final String accessKeyId = "LTAI4FzSfUYsSxewnz9zZJSL";
-    static final String accessKeySecret = "IIqkmn9vJnoco7Bn8WuL2SZnXPcGod";
+    //开发者AK
+    static final String accessKeyId = "";
+    static final String accessKeySecret = "";
 
     public static SendSmsResponse sendSms(String phone , String code) throws ClientException {
         //可自助调整超时时间
